@@ -192,10 +192,15 @@
       var sum1 = 0;
       var sum2 = 0;
       for (var i=0; i<this.attributes.n; i++) {
-        
+        if (minorDiagonalColumnIndexAtFirstRow-i < 0) {
+          break;
+        }
+        sum1 = sum1 + this.attributes[i][minorDiagonalColumnIndexAtFirstRow-i];
       }
       for (var j=0; j<this.attributes.n; j++) {
-        
+        if (minorDiagonalColumnIndexAtFirstRow)
+          // (4-1)-p+i, (4-1)-i
+          // (this.attributes.n-1)-p+j, (this.attributes.n-1)-j
       }
 
       return result; // fixme

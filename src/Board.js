@@ -143,21 +143,59 @@
       //iterate i goes from 0 to 3
       for (var i=0; i<this.attributes.n; i++) {
         //if majorDiagonalColumnIndexAtFirstRow+i > n
-        if (majorDiagonalColumnIndexAtFirstRow+i >= this.attributes.n) {
-          //break
-          break;
+        // if (majorDiagonalColumnIndexAtFirstRow+i >= this.attributes.n) {
+        //   //break
+        //   break;
+        // }
+
+        //CHECK FIRST ELEMENT INDEX
+        if (i < 0 || i > this.attributes.n-1) {
+          continue;
         }
+
+        //CHECK SECOND ELEMENT INDEX
+        if (majorDiagonalColumnIndexAtFirstRow+i < 0 ||
+          majorDiagonalColumnIndexAtFirstRow+i > this.attributes.n-1) {
+          continue;
+        }
+
         //add to sum1 if necessary, sum1 = sum1 + this.attributes[x][y]
         sum1 = sum1 + this.attributes[i][majorDiagonalColumnIndexAtFirstRow+i];    
       }
       //declare a variable sum2
       var sum2 =0;
       for(var j=0; j<this.attributes.n; j++){
-        if(majorDiagonalColumnIndexAtFirstRow+j >= this.attributes.n) {
-          break;
+        // if(majorDiagonalColumnIndexAtFirstRow+j > this.attributes.n-1) {
+        //   break;
+        // }
+
+        //add constraints to element indices
+        //in this case, j should be ok
+        //add constraint for majorDiagonalColumnIndexAtFirstRow+j
+        //above 'break' should take care of case of this being too big
+
+        //CHECK FIRST ELEMENT INDEX
+        if (majorDiagonalColumnIndexAtFirstRow+j < 0 ||
+          majorDiagonalColumnIndexAtFirstRow+j > this.attributes.n-1) {
+          continue;
         }
+
+        //CHECK SECOND ELEMENT INDEX
+        if (j < 0 || j > this.attributes.n-1) {
+          continue;
+        }
+
         sum2 = sum2 + this.attributes[majorDiagonalColumnIndexAtFirstRow+j][j];
       }
+
+          /*
+                      j
+                      0   1   2   3
+              p   3   30  41  52  63
+                  2   20  31  42  53
+                  1   10  21  32  43
+                  0   00  11  22  33
+          */
 
       if(sum1 > 1 || sum2 > 1){
         result = true;
@@ -192,23 +230,74 @@
       var sum1 = 0;
       var sum2 = 0;
       for (var i=0; i<this.attributes.n; i++) {
-        if (minorDiagonalColumnIndexAtFirstRow-i < 0) {
-          break;
+        // if (minorDiagonalColumnIndexAtFirstRow-i < 0) {
+        //   break;
+        // }
+
+        //CHECK FIRST ELEMENT INDEX
+        if (i < 0 || i > this.attributes.n-1) {
+          continue;
         }
+
+        //CHECK SECOND ELEMENT INDEX
+        if (minorDiagonalColumnIndexAtFirstRow-i < 0 ||
+          minorDiagonalColumnIndexAtFirstRow-i > this.attributes.n-1) {
+          continue;
+        }
+
         sum1 = sum1 + this.attributes[i][minorDiagonalColumnIndexAtFirstRow-i];
       }
       for (var j=0; j<this.attributes.n; j++) {
-        if (minorDiagonalColumnIndexAtFirstRow)
+
+        // if ( (this.attributes.n-1)-minorDiagonalColumnIndexAtFirstRow + j > 3){
+        //   break;
+        // }
+
+        //CHECK FIRST ELEMENT INDEX
+        if (this.attributes.n-1-minorDiagonalColumnIndexAtFirstRow+j < 0 ||
+          this.attributes.n-1-minorDiagonalColumnIndexAtFirstRow+j > this.attributes.n-1) {
+          continue;
+        }
+
+        //CHECK SECOND ELEMENT INDEX
+        if (this.attributes.n-1-j < 0 || 
+          this.attributes.n-1-j > this.attributes.n-1) {
+          continue;
+        }
+
+        sum2 = sum2 + this.attributes[this.attributes.n-1-minorDiagonalColumnIndexAtFirstRow+j][this.attributes.n-1-j];
+
+
           // (4-1)-p+i, (4-1)-i
           // (this.attributes.n-1)-p+j, (this.attributes.n-1)-j
+          // (this.attributes.n-1)-minorDiagonal< ColumnInexAtFirstRoi <3        // 
+          /*
+              (4-1)-p+j, (4-1)-j
+                      j
+                      0   1   2   3
+              p   3   03  12  21  30
+                  2   13  22  31  40
+                  1   23  32  41  50
+                  0   33  42  51  60
+          */
       }
-
+      if(sum1 > 1 || sum2 > 1){
+        result = true;
+      }
       return result; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var result = false;
+
+      for(var i=0; i<this.attributes.n;i++){
+        if(this.hasMinorDiagonalConflictAt(i)){
+          result = true;
+        }
+      }
+
+      return result; // fixme
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/

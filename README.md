@@ -38,5 +38,5 @@ Tests are made with the [Mocha](https://github.com/mochajs/mocha) testing framew
 Test are located in the ./spec directory. To run open the spec runner file with chrome.
 
 ```
-SpecRunner.html
+SpecRunner.html 
 ```
